@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('inicio_sesion.urls')),
+    # Esto dirige todas las peticiones que empiecen con "api/"
+    path('api/', include('inicio_sesion.urls')),
 ]
