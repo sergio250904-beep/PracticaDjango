@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class UsuarioManager(BaseUserManager):
@@ -46,3 +48,16 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.nombre
+
+
+class UsuarioUbicacion(models.Model):
+    # Relacionamos con tu usuario autenticado
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='ubicacion')
+    latitude = models.FloatField(null=True)
+    longitude = models.FloatField(null=True)
+    address_name = models.CharField(max_length=255, null=True, blank=True)
+
+    def __str__(self):
+        # Usamos correo_electronico ya que vi que lo usas en tu RegistroView
+        return f"Ubicación de {self.user.correo_electronico}, {self.longitude}, {self.latitude}"

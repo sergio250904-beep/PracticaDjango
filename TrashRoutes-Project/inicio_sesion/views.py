@@ -4,6 +4,12 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from .serializers import UsuarioSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from .serializers import UsuarioSerializer, UsuarioUbicacionSerializer
+
+
+from .models import Usuario, UsuarioUbicacion
 
 
 class RegistroView(APIView):
@@ -13,6 +19,7 @@ class RegistroView(APIView):
             usuario = serializer.save()
             # Generamos su token al instante
             token, _ = Token.objects.get_or_create(user=usuario)
+
             return Response({
                 'token': token.key,
                 'nombre': usuario.nombre,
@@ -37,3 +44,25 @@ class LoginView(APIView):
                 'correo': usuario.correo_electronico
             })
         return Response({'error': 'Correo o contraseña incorrectos'}, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class GuardarUbiUsuario(APIView):
+    authentication_classes = [TokenAuthentication]  # <--- Agrega esto
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+
+        longitud = request.data.get("longitud")
+        latitud = request.data.get("latitud")
+
+        usuario = request.user
+        print(usuario)
+
+        usuarioUbicacion, created = UsuarioUbicacion.objects.get_or_create(
+            user=usuario
+        )
+        usuarioUbicacion.user = usuario
+        usuarioUbicacion.longitude = longitud
+        usuarioUbicacion.latitude = latitud
+        usuarioUbicacion.save()
+        return Response('OK', status=status.HTTP_200_OK)

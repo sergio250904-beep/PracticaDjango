@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Usuario
+from .models import Usuario, UsuarioUbicacion
 
 
 class UsuarioAdmin(admin.ModelAdmin):
     # Columnas que se mostrarán en la tabla del panel de administración
-    list_display = ('id', 'nombre', 'correo_electronico',
+    list_display = ('id', 'correo_electronico',
                     'is_active', 'is_staff')
 
     # Campos por los que podrás buscar usuarios desde el buscador del admin
@@ -16,3 +16,4 @@ class UsuarioAdmin(admin.ModelAdmin):
 
 # Registramos el modelo utilizando la configuración personalizada
 admin.site.register(Usuario, UsuarioAdmin)
+admin.site.register(UsuarioUbicacion)

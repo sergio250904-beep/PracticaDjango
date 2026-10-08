@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Usuario
+from .models import UsuarioUbicacion
 
 
 class UsuarioSerializer(serializers.ModelSerializer):
@@ -17,3 +18,9 @@ class UsuarioSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return usuario
+
+
+class UsuarioUbicacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UsuarioUbicacion
+        fields = ['latitude', 'longitude', 'address_name']
