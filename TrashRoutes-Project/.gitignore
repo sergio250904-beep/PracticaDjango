@@ -1,0 +1,7 @@
+# Archivos compilados y cachés de Python
+__pycache__/
+*.py[cod]
+*$py.class
+/media
+# Base de datos SQLite
+db.sqlite3

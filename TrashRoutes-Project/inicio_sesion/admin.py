@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario, UsuarioUbicacion
+from .models import Usuario, UsuarioUbicacion, ReporteGenerado, AlertaChofer, Ruta
 
 
 class UsuarioAdmin(admin.ModelAdmin):
@@ -7,13 +7,16 @@ class UsuarioAdmin(admin.ModelAdmin):
     list_display = ('id', 'correo_electronico',
                     'is_active', 'is_staff')
 
-    # Campos por los que podrás buscar usuarios desde el buscador del admin
+    # Campos por los que podrás buscar usuarios desde el admin
     search_fields = ('nombre', 'correo_electronico')
 
     # Filtros laterales para organizar los registros
     list_filter = ('is_active', 'is_staff')
 
 
-# Registramos el modelo utilizando la configuración personalizada
+# Registramos el modelo
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(UsuarioUbicacion)
+admin.site.register(ReporteGenerado)
+admin.site.register(AlertaChofer)
+admin.site.register(Ruta)
